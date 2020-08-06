@@ -6,6 +6,6 @@ for (let i = 0; i < calButtons.length; i++) {
     })
 
     btn.addEventListener('mousedown', () => {
-        btn.style.transform = 'scale(0.95)';
+        btn.style.transform = 'scale(0.85)';
     })
 }
