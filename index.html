@@ -12,39 +12,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Document</title>
+    <title>Calculator</title>
 </head>
 <body>
-    <div class="calculator">
-        <input type="text" name="" id="display" disabled placeholder="0.0">
-        <div class="btns">
+    <div class="container">
+        <div class="calculator">
+            <input type="text" name="" id="display" disabled placeholder="0.0">
+            <div class="btns">
 
-            <button class="numb" id="0">0</button>
-            <button class="numb" id="1">1</button>
-            <button class="numb" id="2">2</button>
-            <button class="numb" id="3">3</button>
-            <button class="numb" id="4">4</button>
-            <button class="numb" id="5">5</button>
-            <button class="numb" id="6">6</button>
-            <button class="numb" id="7">7</button>
-            <button class="numb" id="8">8</button>
-            <button class="numb" id="9">9</button>
+                <button id="clear">C</button>
+                <button class="operator" id="equal">=</button>
 
-            <button class="numb" id=".">.</button>
+                <button class="numb" id="seven">7</button>
+                <button class="numb" id="eight">8</button>
+                <button class="numb" id="nine">9</button>
+                <button class="operator" id="plus">+</button>
 
-
-            <button class="operator" id="plus">+</button>
-            <button class="operator" id="minus">-</button>
-            <button class="operator" id="divide">/</button>
-            <button class="operator" id="multiply">*</button>
-            <button class="operator" id="equal">=</button>
-
-            <button id="clear">C</button>
+                <button class="numb" id="four">4</button>
+                <button class="numb" id="five">5</button>
+                <button class="numb" id="six">6</button>
+                <button class="operator" id="minus">-</button>
+    
+                
+                <button class="numb" id="one">1</button>
+                <button class="numb" id="two">2</button>
+                <button class="numb" id="three">3</button>
+                <button class="operator" id="multiply">x</button>
+    
+                <button class="numb" id="zero">0</button>
+                <button class="numb" id="dot">.</button>
+                <button class="operator" id="divide">/</button>
+                
+                
+    
+                
+            </div>
         </div>
     </div>
 
 
-    <script src="calculator.js"></script>
-    <script src="script.js"></script>
+    <script src="scripts/animation.js"></script>
+    <script src="scripts/calculator.js"></script>
+    <script src="scripts/script.js"></script>
 </body>
 </html>

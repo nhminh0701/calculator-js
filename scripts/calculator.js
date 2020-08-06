@@ -63,50 +63,57 @@ class Calculator {
     }
 
     executeOperation(operator) {
-        // if selecting index == 0, store the operator and update selecting index
-        // if selecting index == 1, execute the operation with storing operator
-        //// set the result as the first argument
-        //// clean the second argument
-        //// set new operator
-        //// reset selecting index
         this.cleanText();
 
         if (this.currentIndex == 0 && operator != 'equal') {
+            // store the operator and update selecting index
             this.operator = OPERATORS[operator];
             this.currentIndex = 1;
         } else {
-            const args = [parseFloat(this.arguments[0]), parseFloat(this.arguments[1])]
 
-            switch (this.operator) {
-                case '+':
-                    this.arguments[0] = (args[0] + args[1]).toString();
-                    break;
-                case '-':
-                    this.arguments[0] = (args[0] + args[1]).toString();
-                    break;
-                case '/':
-                    this.arguments[0] = (args[0] / args[1]).toString();
-                    break;
-                case '*':
-                    this.arguments[0] = (args[0] * args[1]).toString();
-                    break;
-            }
-
-            this.arguments[1] = '';
-            if (operator == 'equal') {
-                this.operator = '';
-            } else {
+            // Alow reinput operator
+            if (this.arguments[1] == '' && operator != 'equal') {
                 this.operator = OPERATORS[operator];
-            }
+            } else {
+                // execute the operation with storing operator
+                // set the result as the first argument
+                // clean the second argument
+                // set new operator
+                // reset selecting index
 
-            this.result = this.arguments[0];
+                const args = [parseFloat(this.arguments[0]), parseFloat(this.arguments[1])]
+
+                switch (this.operator) {
+                    case '+':
+                        this.arguments[0] = (args[0] + args[1]).toString();
+                        break;
+                    case '-':
+                        this.arguments[0] = (args[0] - args[1]).toString();
+                        break;
+                    case '/':
+                        this.arguments[0] = (args[0] / args[1]).toString();
+                        break;
+                    case '*':
+                        this.arguments[0] = (args[0] * args[1]).toString();
+                        break;
+                }
+
+                this.arguments[1] = '';
+                if (operator == 'equal') {
+                    this.operator = '';
+                } else {
+                    this.operator = OPERATORS[operator];
+                }
+
+                this.result = this.arguments[0];
+            }
         }
 
         this.updateText();
     }
 
     updateText() {
-        return this.displayText = this.arguments.join(` ${this.operator} `);
+        return this.displayText = this.arguments.join(this.operator);
     }
 
     reset() {

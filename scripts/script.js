@@ -6,7 +6,7 @@ const numbBtns = document.querySelectorAll('.numb');
 
 for (let i = 0; i < numbBtns.length; i++) {
     numbBtns[i].addEventListener('click', () => {
-        calculator.inputNumber(numbBtns[i].id);
+        calculator.inputNumber(numbBtns[i].textContent);
         displayField.value = calculator.displayText;
     });
 }
