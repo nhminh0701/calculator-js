@@ -13,21 +13,23 @@ class Calculator {
     // Hold value of 2 arguments in a list
     // when an operation executed, the list renewed with the result as the first argument
     constructor() {
-        this.arguments = ['', ''];
-        this.currentIndex = 0;
-        this.result = 0;
-        this.displayText = '';
-        this.operator = '';
+        this.state = {
+            arguments: ['', ''],
+            currentIndex: 0,
+            result: 0,
+            displayText: '',
+            operator: ''
+        }
     }
 
     inputNumber(number) {
         // reset if selecting 2nd index without any operator
-        if (this.currentIndex == 1 && this.operator == '') {
-            this.arguments[0] = '';
-            this.currentIndex = 0;
+        if (this.state.currentIndex == 1 && this.state.operator == '') {
+            this.state.arguments[0] = '';
+            this.state.currentIndex = 0;
         }
 
-        var currentArg = this.arguments[this.currentIndex];
+        var currentArg = this.state.arguments[this.state.currentIndex];
         // if the letter already reached limmit -> ignore
         if (currentArg.length == MAX_LETTER) {
             return;
@@ -50,77 +52,78 @@ class Calculator {
         }
         
         currentArg += number;
-        this.arguments[this.currentIndex] = currentArg;
+        this.state.arguments[this.state.currentIndex] = currentArg;
 
         this.updateText();
     }
 
-    cleanText() {
-        for (let index = 0; index < 2; index++) {
-            this.arguments[index] = this.arguments[index].replace(END_WITH_ZERO_PATTERN, '$1');
-            this.arguments[index] = this.arguments[index].replace(END_WITH_DOT_PATTERN, '$1');
-        }
-    }
-
-    executeOperation(operator) {
+    inputOperator(operator) {
         this.cleanText();
 
-        if (this.currentIndex == 0 && operator != 'equal') {
+        if (this.state.currentIndex == 0 && operator != 'equal') {
             // store the operator and update selecting index
-            this.operator = OPERATORS[operator];
-            this.currentIndex = 1;
+            this.state.operator = OPERATORS[operator];
+            this.state.currentIndex = 1;
         } else {
 
             // Alow reinput operator
-            if (this.arguments[1] == '' && operator != 'equal') {
-                this.operator = OPERATORS[operator];
+            if (this.state.arguments[1] == '' && operator != 'equal') {
+                this.state.operator = OPERATORS[operator];
             } else {
                 // execute the operation with storing operator
                 // set the result as the first argument
                 // clean the second argument
                 // set new operator
                 // reset selecting index
+                this.state.arguments[0] = this.executeOperator(this.state.operator);
 
-                const args = [parseFloat(this.arguments[0]), parseFloat(this.arguments[1])]
-
-                switch (this.operator) {
-                    case '+':
-                        this.arguments[0] = (args[0] + args[1]).toString();
-                        break;
-                    case '-':
-                        this.arguments[0] = (args[0] - args[1]).toString();
-                        break;
-                    case '/':
-                        this.arguments[0] = (args[0] / args[1]).toString();
-                        break;
-                    case '*':
-                        this.arguments[0] = (args[0] * args[1]).toString();
-                        break;
-                }
-
-                this.arguments[1] = '';
+                this.state.arguments[1] = '';
                 if (operator == 'equal') {
-                    this.operator = '';
+                    this.state.operator = '';
                 } else {
-                    this.operator = OPERATORS[operator];
+                    this.state.operator = OPERATORS[operator];
                 }
 
-                this.result = this.arguments[0];
+                this.state.result = this.state.arguments[0];
             }
         }
 
         this.updateText();
     }
 
+    executeOperator(operator) {
+        const args = [parseFloat(this.state.arguments[0]), parseFloat(this.state.arguments[1])]
+
+        switch (operator) {
+            case '+':
+                return (args[0] + args[1]).toString();
+            case '-':
+                return (args[0] - args[1]).toString();
+            case '/':
+                return (args[0] / args[1]).toString();
+            case '*':
+                return (args[0] * args[1]).toString();
+            default:
+                throw Error('Invalid operator ' + operator);
+        }
+    }
+
+    cleanText() {
+        for (let index = 0; index < 2; index++) {
+            this.state.arguments[index] = this.state.arguments[index].replace(END_WITH_ZERO_PATTERN, '$1');
+            this.state.arguments[index] = this.state.arguments[index].replace(END_WITH_DOT_PATTERN, '$1');
+        }
+    }
+
     updateText() {
-        return this.displayText = this.arguments.join(this.operator);
+        return this.state.displayText = this.state.arguments.join(this.state.operator);
     }
 
     reset() {
-        this.arguments = ['', ''];
-        this.currentIndex = 0;
-        this.displayText = '';
-        this.operator = '';
-        this.result = 0;
+        this.state.arguments = ['', ''];
+        this.state.currentIndex = 0;
+        this.state.displayText = '';
+        this.state.operator = '';
+        this.state.result = 0;
     }
 }
